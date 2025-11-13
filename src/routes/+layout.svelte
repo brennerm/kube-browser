@@ -14,6 +14,7 @@
 	<description>
 		Explore Kubernetes API resources with their complete property definitions
 	</description>
+	<script defer src="https://cloud.umami.is/script.js" data-website-id="bc3a9c32-84d9-4d90-ab17-686777f961b8"></script>
 </svelte:head>
 
 <div class="navbar bg-base-100">
