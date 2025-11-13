@@ -5,9 +5,14 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
+		paths: {
+			base:  process.argv.includes('dev') ? '' : '/kubedex'
+		},
 		adapter: adapter(
 			{
-				fallback: 'index.html'
+				fallback: 'index.html',
+				strict: true,
+				precompress: true
 			}
 		),
 	}
