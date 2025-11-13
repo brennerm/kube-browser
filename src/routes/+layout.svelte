@@ -26,9 +26,16 @@
 
 	<div class="flex items-center gap-x-2">
 		<span class="text-nowrap">Kubernetes</span>
-		<select class="select" bind:value={k8sApi.selectedVersion}>
+		<select 
+			class="select" 
+			value={k8sApi.selectedVersion}
+			onchange={async (e) => {
+				await k8sApi.setSelectedVersion((e.target as HTMLSelectElement).value);
+			}}
+			disabled={k8sApi.isLoading}
+		>
 			{#each k8sApi.availableVersions as version}
-				<option>{version}</option>	
+				<option value={version}>{version}</option>	
 			{/each}
 		</select>
 	</div>

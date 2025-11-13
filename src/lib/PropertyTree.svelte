@@ -35,32 +35,36 @@
 	<div class="flex items-start gap-2">
 		{#if hasNestedContent(property)}
 			<button
-				class="btn btn-xs btn-circle btn-ghost shrink-0"
+				class="btn btn-circle shrink-0 btn-ghost btn-xs"
 				onclick={toggleExpand}
 				aria-label={expanded ? 'Collapse' : 'Expand'}
 			>
-        <span class="transition-transform duration-300" class:-rotate-90={!expanded}>▼</span>
+				<span class="transition-transform duration-300" class:-rotate-90={!expanded}>▼</span>
 			</button>
 		{:else}
 			<div class="w-8 shrink-0"></div>
 		{/if}
 
-		<div class="flex-1 min-w-0">
-			<div class="flex items-center gap-3 flex-wrap mb-1">
-				<span class="font-mono font-semibold text-base">
+		<div class="min-w-0 flex-1">
+			<div class="mb-1 flex flex-wrap items-center gap-3">
+				<span class="font-mono text-base font-semibold">
 					{property.name}
 				</span>
 				{#if property.required}
-					<span class="badge badge-error badge-xs font-bold">required</span>
+					<span class="badge badge-xs font-bold badge-error">required</span>
 				{/if}
 
-				<span class="font-mono text-xs text-base-content/60 italic wrap-anywhere justify-self-end text-right grow">
+				<span
+					class="grow justify-self-end text-right font-mono text-xs wrap-anywhere text-base-content/60 italic"
+				>
 					{getTypeDisplay(property)}
 				</span>
 			</div>
 
 			{#if property.description}
-				<div class="text-sm leading-relaxed text-base-content/70 whitespace-pre-wrap wrap-anywhere mt-1">
+				<div
+					class="mt-1 text-sm leading-relaxed wrap-anywhere whitespace-pre-wrap text-base-content/70"
+				>
 					{property.description}
 				</div>
 			{/if}
@@ -68,7 +72,7 @@
 	</div>
 
 	{#if expanded && hasNestedContent(property)}
-		<div class="mt-2 pt-2 border-l-2 border-base-content/10 pl-2">
+		<div class="mt-2 border-l-2 border-base-content/10 pt-2 pl-2">
 			{#each property.properties as nestedProp}
 				<PropertyTree property={nestedProp} level={level + 1} />
 			{/each}
