@@ -8,7 +8,7 @@
 	} from '$lib/schemaResolver';
 	import PropertyTree from '$lib/PropertyTree.svelte';
 	import { k8sApi } from '$lib/k8s-api.svelte';
-	import { propertyMatchesSearch } from '$lib/fuzzySearch';
+	import { filterProperties, propertyMatchesSearch } from '$lib/fuzzySearch';
 	import Svelecte from 'svelecte';
 
 	let propertyFilter = $state('');
@@ -128,7 +128,7 @@
 
 					{#if resolvedSchema.properties.length > 0}
 						<div class="overflow-x-auto">
-							{#each resolvedSchema.properties.filter( (el) => propertyMatchesSearch(el, propertyFilter) ) as property}
+							{#each filterProperties(resolvedSchema.properties, propertyFilter) as property}
 								<PropertyTree {property} />
 							{/each}
 						</div>

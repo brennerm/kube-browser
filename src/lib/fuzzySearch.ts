@@ -10,15 +10,7 @@ export function fuzzyMatch(text: string, search: string | null): boolean {
 	const textLower = text.toLowerCase();
 	const searchLower = search.toLowerCase();
 	
-	let searchIndex = 0;
-	
-	for (let i = 0; i < textLower.length && searchIndex < searchLower.length; i++) {
-		if (textLower[i] === searchLower[searchIndex]) {
-			searchIndex++;
-		}
-	}
-	
-	return searchIndex === searchLower.length;
+	return textLower.includes(searchLower);
 }
 
 /**
@@ -28,7 +20,6 @@ export function fuzzyMatch(text: string, search: string | null): boolean {
 export function propertyMatchesSearch(property: PropertyInfo, search: string | null): boolean {
 	if (!search) return true;
 	
-	// Check if property name matches
 	if (fuzzyMatch(property.name, search)) return true;
 	
 	if (property.description && fuzzyMatch(property.description, search)) return true;
@@ -37,7 +28,6 @@ export function propertyMatchesSearch(property: PropertyInfo, search: string | n
 	
 	if (property.required && fuzzyMatch('required', search)) return true;
 	
-	// Check if any nested properties match
 	if (property.properties && property.properties.length > 0) {
 		return property.properties.some(child => propertyMatchesSearch(child, search));
 	}
@@ -53,11 +43,7 @@ export function filterPropertyTree(property: PropertyInfo, search: string): Prop
 	if (!search) return property;
 	
 	// Check if this property itself matches
-	const propertyMatches = 
-		fuzzyMatch(property.name, search) ||
-		(property.description && fuzzyMatch(property.description, search)) ||
-		fuzzyMatch(property.type, search) ||
-		(property.ref && fuzzyMatch(property.ref, search));
+	const propertyMatches = propertyMatchesSearch(property, search);
 	
 	// Filter nested properties
 	let filteredChildren: PropertyInfo[] | undefined = undefined;

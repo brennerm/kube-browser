@@ -4,12 +4,13 @@
 
 	interface Props {
 		property: PropertyInfo;
+		filter?: string;
 		level?: number;
 	}
 
-	let { property, level = 0 }: Props = $props();
+	let { property, filter, level = 0 }: Props = $props();
 
-	let expanded = $state(level < 2); // Auto-expand first 2 levels
+	let expanded = $state(true);
 
 	function toggleExpand() {
 		expanded = !expanded;
