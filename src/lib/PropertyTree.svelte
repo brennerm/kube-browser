@@ -32,8 +32,14 @@
 
 	function convertLinks(text: string): string {
 		const urlRegex = /(https?:\/\/[^\s]+)/g;
+
 		return text.replace(urlRegex, (url) => {
-			const parsedUrl = new URL(url);
+			let parsedUrl;
+			try {
+				parsedUrl = new URL(url);
+			} catch (error) {
+				return url;
+			}
 			var linkText = url
 
 			const pathBase = parsedUrl.pathname.replace(/\/$/, '').split('/').pop();
